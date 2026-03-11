@@ -47,7 +47,7 @@ export default function Main() {
     <>
       <main className="content">
         <div className="profile">
-          <img className="profile__image" src={profileImage} alt="Profile Picture" onClick={() => handleOpenPopup(newCardAvatarPopup)}></img>
+          <img className="profile__image" src={profileImage} alt="Profile Picture" onClick={() => handleOpenPopup(newCardAvatarPopup)} />
           <div className="profile__container">
             <div className="profile__name-container">
               <h3 className="profile__name">Jacques</h3>
@@ -63,7 +63,7 @@ export default function Main() {
         </div>
         <div className="elements">
           {cards.map((card) => (
-            <Card key={card.id} card={card} handleOpenPopup={handleOpenPopup} />
+            <Card key={card._id} card={card} handleOpenPopup={handleOpenPopup} />
           ))}
         </div>
         {popup && (
