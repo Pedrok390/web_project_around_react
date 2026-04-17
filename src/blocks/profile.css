@@ -5,7 +5,11 @@
 }
 .profile__image {
   max-width: 120px;
+  width: 100%;
   margin-right: 30px;
+  height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 .profile__container {
   max-width: 60%;

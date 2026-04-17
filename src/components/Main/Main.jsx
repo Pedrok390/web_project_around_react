@@ -8,66 +8,44 @@ import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
 import Card from "./components/Card/Card";
 import ImagePopup from "./components/Popup/components/ImagePopup/ImagePopup";
+import {api} from "../../utils/api";
 
-import {useState} from "react";
+import {useState, useEffect, useContext} from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Main() {
-  const [popup, setPopup] = useState(null);
+export default function Main(props) {
+  const {onOpenPopup, onClosePopup, popup, onCardLike, onCardDelete, cards, onAddPlaceSubmit} = props
+  const {currentUser} = useContext(CurrentUserContext);
 
-  const newCardPopup = {title: "New card", children: <NewCard />, type: "popup_type_form"};
+  const newCardPopup = {title: "New card", children: <NewCard onAddPlaceSubmit={onAddPlaceSubmit} />, type: "popup_type_form"};
   const newCardProfilePopup = {title: "Editar Perfil", children: <EditProfile />, type: "popup_type_form"};
   const newCardAvatarPopup = {title: "Editar Avatar", children: <EditAvatar />, type: "popup_type_form"};
 
-  const cards = [
-    {
-      isLiked: false,
-      _id: "5d1f0611d321eb4bdcd707dd",
-      name: "Yosemite Valley",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-      owner: "5d1f0611d321eb4bdcd707dd",
-      createdAt: "2019-07-05T08:10:57.741Z",
-    },
-    {
-      isLiked: false,
-      _id: "5d1f064ed321eb4bdcd707de",
-      name: "Lake Louise",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-      owner: "5d1f0611d321eb4bdcd707dd",
-      createdAt: "2019-07-05T08:11:58.324Z",
-    },
-  ];
-
-  function handleOpenPopup(popup) {
-    setPopup(popup);
-  }
-  function handleClosePopup() {
-    setPopup(null);
-  }
   return (
     <>
       <main className="content">
         <div className="profile">
-          <img className="profile__image" src={profileImage} alt="Profile Picture" onClick={() => handleOpenPopup(newCardAvatarPopup)} />
+          <img className="profile__image" src={currentUser.avatar} alt="Profile Picture" onClick={() => onOpenPopup(newCardAvatarPopup)} />
           <div className="profile__container">
             <div className="profile__name-container">
-              <h3 className="profile__name">Jacques</h3>
-              <button className="profile__edit-button" id="profile__button" onClick={() => handleOpenPopup(newCardProfilePopup)}>
+              <h3 className="profile__name">{currentUser.name}</h3>
+              <button className="profile__edit-button" id="profile__button" onClick={() => onOpenPopup(newCardProfilePopup)}>
                 <img className="profile__edit-image" src={editIcon} alt="Editar Perfil" />
               </button>
             </div>
-            <p className="profile__job">Developer</p>
+            <p className="profile__job">{currentUser.about}</p>
           </div>
-          <button className="profile__add-button" id="card__button" onClick={() => handleOpenPopup(newCardPopup)}>
+          <button className="profile__add-button" id="card__button" onClick={() => onOpenPopup(newCardPopup)}>
             <img className="profile__add-image" src={plusSign} alt="Adicionar" />
           </button>
         </div>
         <div className="elements">
-          {cards.map((card) => (
-            <Card key={card._id} card={card} handleOpenPopup={handleOpenPopup} />
+          {cards.map((card) => (  
+            <Card key={card._id} card={card} handleOpenPopup={onOpenPopup} onCardLike={onCardLike} onCardDelete={onCardDelete} />
           ))}
         </div>
         {popup && (
-          <Popup onClose={handleClosePopup} title={popup.title} type={popup.type}>
+          <Popup onClose={onClosePopup} title={popup.title} type={popup.type}>
             {popup.children}
           </Popup>
         )}
