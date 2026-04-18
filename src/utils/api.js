@@ -61,6 +61,7 @@ export default class Api {
       body: JSON.stringify({
         name: name,
         link: link,
+        isLiked: false,
       }),
     }).then((res) => {
       if (res.ok) {

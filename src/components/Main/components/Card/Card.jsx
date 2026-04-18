@@ -35,7 +35,7 @@ export default function Card(props) {
         <div className="element__content">
           <h4 className="element__name">{name}</h4>
           <button className="element__button" onClick={handleLikeClick}>
-            <img className={cardLikeButtonClassName} src={isLiked ? likeIcon : likeIconFull} alt="like icon" />
+            <img className={cardLikeButtonClassName} src={isLiked ? likeIconFull : likeIcon} alt="like icon" />
           </button>
         </div>
       </div>
