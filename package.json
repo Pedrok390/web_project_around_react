@@ -2,12 +2,15 @@
   "name": "web_project_around_react",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://Pedrok390.github.io/web_project_around_react",
   "type": "module",
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "react": "^19.2.0",
